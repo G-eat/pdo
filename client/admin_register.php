@@ -3,10 +3,11 @@
 
   if (isset($_POST['first_name'] , $_POST['last_name'] , $_POST['password'])) {
     $name = $_POST['first_name']. ' ' . $_POST['last_name'];
+    $originalPass = $_POST['password'];
     $password = md5($_POST['password']);
 
-    if (empty($name) || empty($password)) {
-      $error = 'Complete Form.';
+    if (strlen($originalPass) < 8) {
+      $error = 'Password must have 8 characters.';
     } else {
       $mysql = 'SELECT * FROM users WHERE name = ?';
       $query = $pdo->prepare($mysql);
@@ -34,6 +35,8 @@
   <head>
     <meta charset="utf-8">
     <title>PDO | Register</title>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   </head>

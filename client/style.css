@@ -1,0 +1,8 @@
+#nav-mobile li a:hover {
+  background: red;
+}
+
+.sidenav .divider{
+  margin: 0;
+  background-color: black;
+}

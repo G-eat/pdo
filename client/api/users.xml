@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<users>
+  <user>
+    <id>13</id>
+    <name>Andi </name>
+    <admin>1</admin>
+    <password>3dbe00a167653a1aaee01d93e77e730e</password>
+    <created_at>2019-02-13 14:45:33</created_at>
+  </user>
+  <user>
+    <id>14</id>
+    <name>Andi 1</name>
+    <admin>0</admin>
+    <password>3dbe00a167653a1aaee01d93e77e730e</password>
+    <created_at>2019-02-13 14:58:00</created_at>
+  </user>
+  <user>
+    <id>16</id>
+    <name>G-eat </name>
+    <admin>0</admin>
+    <password>9c72446df124ddf214b698c1e2312371</password>
+    <created_at>2019-02-14 14:01:00</created_at>
+  </user>
+</users>
