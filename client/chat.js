@@ -32,7 +32,11 @@ function get_message() {
 
 document.addEventListener('DOMContentLoaded', function(){
   let getMessage = setInterval(getAllMessages, 100);
-  // alert(get_message());
+
+  let user  = document.querySelector('#user_id').value;
+  let you  = document.querySelector('#your_id').value;
+  let messageSeen = setInterval(function(){messagesSeen(you,user)}, 100);
+
   getAllMessages();
 }, false);
 
@@ -52,22 +56,23 @@ function getAllMessages() {
       let element = document.getElementById('content');
       data.forEach((message)=>{
         // document.getElementById("input").value='';
-
+        let data = new Date(message.created_at);
 
         // let e = document.createElement('div');
         if (message.user_id == you) {
           output += "<div class='message-wrapper blockquote-blue'>";
-          output += message.message;
+          output += `<span style='overflow-wrap: break-word'>${message.message}</span>`;
+          output += `<div class='right grey-text' style='font-size:0.8rem'>${data.toLocaleTimeString()}</div>`;
           output += '</div>';
           // e.className='message-wrapper blockquote-blue';
         }else {
           output += "<div class='message-wrapper blockquote right-align'>";
-          output += message.message;
+          output += `<span style='overflow-wrap: break-word'>${message.message}</span>`;
+          output += `<div class='left grey-text' style='font-size:0.8rem'>${data.toLocaleTimeString()}</div>`;
           output += '</div>';
           // e.className='message-wrapper blockquote';
         }
         // e.innerHTML = message.message;
-
         // element.appendChild(e);
       });
 
@@ -80,4 +85,13 @@ function getAllMessages() {
   xmlHttp.open("post", "allmessages.php");
   xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xmlHttp.send('user_id=' + user_id+'& your_id=' + you);
+}
+
+
+function messagesSeen(you,user) {
+  let xmlHttp = new XMLHttpRequest();
+
+  xmlHttp.open("post", "messagesSeen.php");
+  xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xmlHttp.send('user_id=' + user+'& your_id=' + you);
 }

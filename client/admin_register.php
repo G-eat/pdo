@@ -70,11 +70,11 @@
      <form class="col s12" method='post'>
        <div class="row">
          <div class="input-field col s6">
-           <input id="first_name" type="text" class="validate" name='first_name' required>
+           <input id="first_name" type="text" class="validate" name='first_name' value="<?php echo (!empty($_POST['first_name'])) ?  $_POST['first_name']:'' ?>" required>
            <label for="first_name">First Name</label>
          </div>
          <div class="input-field col s6">
-           <input id="last_name" type="text" class="validate" name='last_name'>
+           <input id="last_name" type="text" class="validate" name='last_name' value="<?php echo (!empty($_POST['last_name'])) ?  $_POST['last_name']:'' ?>" required>
            <label for="last_name">Last Name</label>
          </div>
          <div class="input-field col s12">

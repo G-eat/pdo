@@ -52,7 +52,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>PDO</title>
+    <title>Posts</title>
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <!-- Compiled and minified CSS -->
@@ -65,7 +65,11 @@
     <nav>
       <div class="nav-wrapper">
         <div class="container">
-          <a href="#" class="brand-logo">Pdo</a>
+          <?php if (isset($_SESSION['admin'])) { ?>
+            <a href="http://localhost/pdo/client/profile.php?user=<?php echo $_SESSION['admin'] ?>" class="brand-logo"><?php echo $_SESSION['admin'] ?></a>
+          <?php } else {?>
+            <a href="http://localhost/pdo/client/profile.php?user=<?php echo $_SESSION['log_in'] ?>" class="brand-logo"><?php echo $_SESSION['log_in'] ?></a>
+          <?php } ?>
           <ul class="right hide-on-med-and-down">
             <li class='active'><a href="#">Posts</a></li>
             <li><a href="http://localhost/pdo/client/create_post.php">Create Post</a></li>
@@ -78,7 +82,11 @@
           </ul>
 
           <ul id="nav-mobile" class="sidenav red lighten-2">
-            <li><a href="#" class="white-text red darken-4">Pdo</a></li>
+            <?php if (isset($_SESSION['admin'])) { ?>
+              <li><a href="http://localhost/pdo/client/profile.php?user=<?php echo $_SESSION['admin'] ?>" class="white-text red darken-4"><?php echo $_SESSION['admin'] ?></a></li>
+            <?php } else {?>
+              <li><a href="http://localhost/pdo/client/profile.php?user=<?php echo $_SESSION['log_in'] ?>" class="white-text red darken-4"><?php echo $_SESSION['log_in'] ?></a></li>
+            <?php } ?>
             <li><div class="divider"></div></li>
             <li><a href="http://localhost/pdo/client/index.php" class="white-text" style="background:red">Posts</a></li>
             <li><div class="divider"></div></li>

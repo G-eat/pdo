@@ -27,7 +27,7 @@ if (isset($_SESSION['log_in']) || isset($_SESSION['admin'])) {
  <html lang="en" dir="ltr">
    <head>
      <meta charset="utf-8">
-     <title>PDO</title>
+     <title>Users</title>
      <!--Let browser know website is optimized for mobile-->
      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
      <!-- Compiled and minified CSS -->
@@ -40,7 +40,7 @@ if (isset($_SESSION['log_in']) || isset($_SESSION['admin'])) {
      <nav>
        <div class="nav-wrapper">
          <div class="container">
-           <a href="#" class="brand-logo">Pdo</a>
+           <a href="http://localhost/pdo/client/profile.php?user=<?php echo $name ?>" class="brand-logo"><?php echo $name ?></a>
            <ul class="right hide-on-med-and-down">
              <li ><a href="http://localhost/pdo/client/index.php">Posts</a></li>
              <li><a href="http://localhost/pdo/client/create_post.php">Create Post</a></li>
@@ -53,7 +53,7 @@ if (isset($_SESSION['log_in']) || isset($_SESSION['admin'])) {
            </ul>
 
            <ul id="nav-mobile" class="sidenav red lighten-2">
-             <li><a href="#" class="white-text red darken-4">Pdo</a></li>
+             <li><a href="http://localhost/pdo/client/profile.php?user=<?php echo $name ?>" class="white-text red darken-4"><?php echo $name ?></a></li>
              <li><div class="divider"></div></li>
              <li><a href="http://localhost/pdo/client/index.php" class="white-text">Posts</a></li>
              <li><div class="divider"></div></li>
@@ -79,8 +79,18 @@ if (isset($_SESSION['log_in']) || isset($_SESSION['admin'])) {
        <ul class="collection with-header">
          <li class="collection-header"><h6>Users</h6></li>
          <?php  foreach ($users as $user) { ?>
-           <a href="chat.php?id=<?php echo $user['id'] ?>&y=<?php echo $you['id'] ?>" class="collection-item">
-             <?php echo $user['name']; ?>
+           <a href="chat.php?id=<?php echo $user['id'] ?>" onclick="messagesSeen(<?php echo $you['id'] ?>,<?php echo $_SESSION['user_id'] ?>)" class="collection-item">
+             <span><?php echo $user['name']; ?></span>
+             <?php
+               $your_id = $you['id'];
+               $user_id = $user['id'];
+               $mysql = 'SELECT * FROM chat WHERE user_id = ? AND your_id = ? AND seen = false';
+               $query = $pdo->prepare($mysql);
+               $query->execute([$your_id,$user_id]);
+               $data = $query->rowCount();
+             if ($data !== 0) { ?>
+               <span class="new badge" id='aaaa'><?php echo $data ?></span>
+             <?php }?>
            </a>
          <?php }?>
        </ul>
@@ -93,7 +103,24 @@ if (isset($_SESSION['log_in']) || isset($_SESSION['admin'])) {
          let elems = document.querySelectorAll('.sidenav');
          let instances = M.Sidenav.init(elems, {draggable:true});
        });
+
+       function myFunction(user,you) {
+         // alert(user + '%' + you)
+         let xmlHttp = new XMLHttpRequest();
+         xmlHttp.onreadystatechange = function()
+           {
+             if(xmlHttp.readyState == 4 && xmlHttp.status == 200)
+             {
+               alert(xmlHttp.response);
+               // data = JSON.parse(xmlHttp.response);
+             }
+           }
+           xmlHttp.open("post", "messagesUnseen.php");
+           xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+           xmlHttp.send('user_id=' + you+'& your_id=' + user);
+         }
      </script>
+     <script src="./chat.js"></script>
    </body>
  </html>
 <?php } else {

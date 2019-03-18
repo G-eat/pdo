@@ -47,7 +47,7 @@
     <html lang="en" dir="ltr">
       <head>
         <meta charset="utf-8">
-        <title>Pdo | Post</title>
+        <title>Post</title>
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <!-- Compiled and minified CSS -->
@@ -60,7 +60,11 @@
         <nav>
           <div class="nav-wrapper">
             <div class="container">
-              <a href="#" class="brand-logo">Pdo</a>
+              <?php if (isset($_SESSION['admin'])) { ?>
+                <a href="http://localhost/pdo/client/profile.php?user=<?php echo $_SESSION['admin'] ?>" class="brand-logo"><?php echo $_SESSION['admin'] ?></a>
+              <?php } else {?>
+                <a href="http://localhost/pdo/client/profile.php?user=<?php echo $_SESSION['log_in'] ?>" class="brand-logo"><?php echo $_SESSION['log_in'] ?></a>
+              <?php } ?>
               <ul class="right hide-on-med-and-down">
                 <li><a href="http://localhost/pdo/client/">Posts</a></li>
                 <li><a href="http://localhost/pdo/client/create_post.php">Create Post</a></li>
@@ -73,7 +77,11 @@
               </ul>
 
               <ul id="nav-mobile" class="sidenav red lighten-2">
-                <li><a href="#" class="white-text red darken-4">Pdo</a></li>
+                <?php if (isset($_SESSION['admin'])) { ?>
+                  <li><a href="http://localhost/pdo/client/profile.php?user=<?php echo $_SESSION['admin'] ?>" class="white-text red darken-4"><?php echo $_SESSION['admin'] ?></a></li>
+                <?php } else {?>
+                  <li><a href="http://localhost/pdo/client/profile.php?user=<?php echo $_SESSION['log_in'] ?>" class="white-text red darken-4"><?php echo $_SESSION['log_in'] ?></a></li>
+                <?php } ?>
                 <li><div class="divider"></div></li>
                 <li><a href="http://localhost/pdo/client/index.php" class="white-text">Posts</a></li>
                 <li><div class="divider"></div></li>
@@ -115,7 +123,7 @@
                 </div>
                 <div class="card-action">
                   <span>Created_at <span class='amber-text'><?php echo $data['created_at'] ?></span> in category : <span class='amber-text'><?php echo $data['category'] ?></span></span>
-                  <span class="orange-text darken-4" style="float:right;"><?php echo $data['post_user'] ?></span>
+                  <a href="http://localhost/pdo/client/profile.php?user=<?php echo $data['post_user'] ?>" class="orange-text darken-4" style="float:right;"><?php echo $data['post_user'] ?></a>
                 </div>
               </div>
             </div>

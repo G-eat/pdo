@@ -18,6 +18,8 @@
           $query = $pdo->prepare($mysql);
           $query->execute([$name,$password]);
 
+          $user = $query->fetch();
+
           $num = $query->rowCount();
 
           $mysql2 = 'SELECT * FROM users WHERE name = ? AND password = ? AND admin =1';
@@ -29,10 +31,12 @@
           if ($num == 1) {
             if ($num2 == 1) {
               $_SESSION['admin'] = $name;
+              $_SESSION['user_id'] = $user['id'];
               header('Location: http://localhost/pdo/client/admin_dashbord.php');
               exit();
             } else{
               $_SESSION['log_in'] = $name;
+              $_SESSION['user_id'] = $user['id'];
               header('Location: http://localhost/pdo/client/index.php');
               exit();
             }
@@ -84,11 +88,11 @@
          <form class="col s12" method='post'>
            <div class="row">
              <div class="input-field col s6">
-               <input id="first_name" type="text" class="validate" name='first_name' required>
+               <input id="first_name" type="text" class="validate" name='first_name' value="<?php echo (!empty($_POST['first_name'])) ?  $_POST['first_name']:'' ?>" required>
                <label for="first_name">First Name</label>
              </div>
              <div class="input-field col s6">
-               <input id="last_name" type="text" class="validate" name='last_name'>
+               <input id="last_name" type="text" class="validate" name='last_name' value="<?php echo (!empty($_POST['last_name'])) ?  $_POST['last_name']:'' ?>">
                <label for="last_name">Last Name</label>
              </div>
              <div class="input-field col s12">
