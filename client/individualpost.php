@@ -119,6 +119,16 @@
               <div class="card blue-grey darken-1">
                 <div class="card-content white-text">
                   <span class="card-title center-align"><h5 class='amber-text text-darken-2'><?php echo $data['title'] ?></h5></span><hr><br>
+                  <div class="row">
+                    <div class="col s12 m6 offset-m3">
+                      <?php if ($data['image_file']) { ?>
+                        <div class="card-image">
+                          <img class="materialboxed" src="http://localhost/pdo/images/<?php echo $data['image_file'] ?>">
+                        </div>
+                        <br>
+                      <?php } ?>
+                    </div>
+                  </div>
                   <p><?php echo $data['body'] ?></p>
                 </div>
                 <div class="card-action">
@@ -203,6 +213,12 @@
           document.addEventListener('DOMContentLoaded', function() {
             let elems = document.querySelectorAll('.sidenav');
             let instances = M.Sidenav.init(elems, {draggable:true});
+          });
+
+          // photo zoom
+          document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.materialboxed');
+            var instances = M.Materialbox.init(elems, {onOpenStart:true});
           });
 
           //modal

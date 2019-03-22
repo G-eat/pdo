@@ -10,18 +10,38 @@
     if (isset($_POST['category'] , $_POST['title'] ,$_POST['body'])) {
        $category = $_POST['category'];
        $title = $_POST['title'];
+       if ($_FILES['image']['name'] !== '') {
+         $image_name = $_FILES['image']['name'];
+         $image_name_break = explode('.',$image_name);
+         $image_name_start = $image_name_break[0];
+         $image_name_end = end($image_name_break);
+         $file_ext_allowed = array('jpeg','jpg','png','gif');
+
+        if (in_array(strtolower($image_name_end),$file_ext_allowed)) {
+          $uniq_id = uniqid('', true);
+          $image = $uniq_id . '-' . $image_name_start . '.' . $image_name_end ;
+          $file_destination = '../images/'.$image;
+
+          move_uploaded_file($_FILES['image']['tmp_name'],$file_destination);
+        } else {
+          $image = '';
+        }
+       } else {
+         $image = '';
+       }
        $body = nl2br($_POST['body']);
-       $post_user = $_SESSION['log_in'];
-       if ( $post_user == '') {
+       if ( isset($_SESSION['admin'])) {
          $post_user = $_SESSION['admin'];
+       } else {
+         $post_user = $_SESSION['log_in'];
        }
 
        if (empty($category) or empty($title) or empty($body)) {
          $error = 'You Need To Complete Form.';
        } else {
-         $mysql = 'INSERT INTO posts (id,post_user,category, title, body, created_at) VALUES (NULL,?,?,?,?, CURRENT_TIMESTAMP)';
+         $mysql = 'INSERT INTO posts (id,post_user,category, title, body, image_file, created_at) VALUES (NULL,?,?,?,?,?, CURRENT_TIMESTAMP)';
          $query = $pdo->prepare($mysql);
-         $query->execute([$post_user,$category,$title,$body]);
+         $query->execute([$post_user,$category,$title,$body,$image]);
          header('Location: http://localhost/pdo/client/');
        }
     }
@@ -98,23 +118,26 @@
 
       <div class="row container">
        <h4 class="red-text text-darken-4">Create Post</h4>
-       <form class="col s12" method='post'>
+       <form class="col s12" method='post' enctype="multipart/form-data">
          <div class="row">
            <div class="input-field col s12">
-             <input id="first_name" type="text" class="validate" name='category'>
-             <label for="first_name">Category</label>
+             <input id="category" type="text" class="validate" name='category' value='<?php echo (!empty($_POST['category'])) ?  $_POST['category']:'' ?>'>
+             <label for="category">Category</label>
            </div>
          </div>
          <div class="row">
            <div class="input-field col s12">
-            <input id="input_text" type="text" data-length="10" class="validate" name='title'>
+            <input id="input_text" type="text" data-length="10" class="validate" name='title' value='<?php echo (!empty($_POST['title'])) ?  $_POST['title']:'' ?>'>
             <label for="input_text">Title</label>
           </div>
          </div>
          <div class="row">
            <div class="input-field">
-             <textarea id="textarea1" name='body' class="materialize-textarea"></textarea>
+             <textarea id="textarea1" name='body' class="materialize-textarea"><?php echo (!empty($_POST['body'])) ?  $_POST['body']:'' ?></textarea>
              <label for="textarea1">Body</label>
+           </div>
+           <div class="input-field">
+             <input type="file" name="image">
            </div>
            <button name='submit' class="btn waves-effect waves-light" type="submit">Submit</button>
          </div>
