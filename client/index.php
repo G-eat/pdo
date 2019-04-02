@@ -7,11 +7,17 @@
   if (isset($_SESSION['log_in']) || isset($_SESSION['admin'])) {
     $post = new Post;
 
-  $posts = $post->get_all();
-  $xmlposts = $post->xml_all();
+    // messages not viewed by users
+    $mysqlUsers = 'SELECT DISTINCT your_id FROM chat WHERE user_id = ? AND seen = false';
+    $queryUsers = $pdo->prepare($mysqlUsers);
+    $queryUsers->execute([$_SESSION['user_id']]);
+    $usersMsg = $queryUsers->rowCount();
+
+    $posts = $post->get_all();
+    $xmlposts = $post->xml_all();
 
 
-//xml users
+  //xml users
   $mysql = "SELECT * FROM users";
   $query = $pdo->prepare($mysql);
   $query->execute();
@@ -58,6 +64,9 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- animate css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <!-- my css -->
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
@@ -73,7 +82,7 @@
           <ul class="right hide-on-med-and-down">
             <li class='active'><a href="#">Posts</a></li>
             <li><a href="http://localhost/pdo/client/create_post.php">Create Post</a></li>
-            <li><a href="http://localhost/pdo/client/users.php">Users</a></li>
+            <li><a href="http://localhost/pdo/client/users.php">Users <?php if($usersMsg){ echo'<span class="red accent-3 black-text circle" style="padding:0 0.6rem">'.$usersMsg.'</span>';} ?></a></li>
             <?php if (isset($_SESSION['admin'])) { ?>
               <li><a href="http://localhost/pdo/client/admin_dashbord.php">Admin</a></li>
             <?php } else {?>
@@ -90,7 +99,7 @@
             <li><div class="divider"></div></li>
             <li><a href="http://localhost/pdo/client/index.php" class="white-text" style="background:red">Posts</a></li>
             <li><div class="divider"></div></li>
-            <li><a href="http://localhost/pdo/client/users.php" class="white-text">Users</a></li>
+            <li><a href="http://localhost/pdo/client/users.php" class="white-text">Users <?php if($usersMsg){ echo'<span class="red accent-3 black-text circle" style="padding:0 0.6rem">'.$usersMsg.'</span>';} ?></a></li>
             <li><div class="divider"></div></li>
             <li><a href="http://localhost/pdo/client/create_post.php" class="white-text">Create Post</a></li>
             <li><div class="divider"></div></li>
@@ -108,7 +117,7 @@
 
     <br><br>
 
-    <div class="container">
+    <div class="container animated bounceInDown">
       <div class="row">
         <div class="col s12">
           <div class="row">
@@ -122,7 +131,7 @@
       </div>
     </div>
 
-    <div class='container'>
+    <div class='container animated bounceInUp'>
       <ul class="collection with-header">
         <li class="collection-header"><h6>Posts</h6></li>
         <?php  foreach ($posts as $post) { ?>

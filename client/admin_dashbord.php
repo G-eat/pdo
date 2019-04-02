@@ -20,6 +20,12 @@
 
     $reports = $query_report->fetchAll();
 
+    // messages not viewed by users
+    $mysqlUsers = 'SELECT DISTINCT your_id FROM chat WHERE user_id = ? AND seen = false';
+    $queryUsers = $pdo->prepare($mysqlUsers);
+    $queryUsers->execute([$_SESSION['user_id']]);
+    $usersMsg = $queryUsers->rowCount();
+
     if (filter_has_var(INPUT_POST,'submit')) {
       $id = $_POST["id"];
       $mysql = 'DELETE FROM posts WHERE id = ?';
@@ -73,6 +79,7 @@
           <ul class="right hide-on-med-and-down">
             <li><a href="http://localhost/pdo/client/index.php">Posts</a></li>
             <li><a href="http://localhost/pdo/client/create_post.php">Create Post</a></li>
+            <li><a href="http://localhost/pdo/client/users.php">Users <?php if($usersMsg){ echo'<span class="red accent-3 black-text circle" style="padding:0 0.6rem">'.$usersMsg.'</span>';} ?></a></li>
             <li><a href="http://localhost/pdo/client/admin_logout.php">Log Out</a></li>
           </ul>
 
@@ -82,6 +89,8 @@
             <li><a href="http://localhost/pdo/client/index.php" class="white-text">Posts</a></li>
             <li><div class="divider"></div></li>
             <li><a href="http://localhost/pdo/client/create_post.php" class="white-text">Create Post</a></li>
+            <li><div class="divider"></div></li>
+            <li><a href="http://localhost/pdo/client/users.php" class="white-text">Users <?php if($usersMsg){ echo'<span class="red accent-3 black-text circle" style="padding:0 0.6rem">'.$usersMsg.'</span>';} ?></a></li>
             <li><div class="divider"></div></li>
             <li><a href="http://localhost/pdo/client/admin_logout.php" class="white-text">Log Out</a></li>
             <li><div class="divider"></div></li>

@@ -39,6 +39,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- animate css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
   </head>
   <body>
 
@@ -46,17 +48,12 @@
       <div class="nav-wrapper">
         <div class="container">
           <a href="#" class="brand-logo">Pdo</a>
-          <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="http://localhost/pdo/client/">Posts</a></li>
-            <li><a href="http://localhost/pdo/client/create_post.php">Create Post</a></li>
-            <li class='active'><a href="http://localhost/pdo/client/admin.php">Admin</a></li>
-          </ul>
         </div>
       </div>
     </nav>
 
     <?php if (isset($error)) {?>
-      <div class="container">
+      <div class="container animated heartBeat">
         <div class="card-panel red lighten-2">
             <?php echo $error; ?>
         </div>
@@ -65,7 +62,7 @@
 
     <br><br>
 
-    <div class="row container">
+    <div class="row container animated bounceInRight">
      <h4 class="red-text text-darken-4">Register</h4>
      <form class="col s12" method='post'>
        <div class="row">
@@ -84,7 +81,7 @@
          <button name='submit' class="btn waves-effect waves-light" type="submit">Submit</button>
        </div>
      </form>
-     <h6 class="red-text text-darken-4"><small>Have account? </small><a href="http://localhost/pdo/client/admin.php">Go back.</a></h6>
+     <h6 class="red-text text-darken-4"><small>Have account? </small><a href="http://localhost/pdo/client/admin.php">LogIn.</a></h6>
     </div>
 
     <!-- Compiled and minified JavaScript -->

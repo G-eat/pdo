@@ -8,9 +8,11 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- animate css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
   </head>
   <body>
-    <div class="container center-align">
+    <div class="container center-align animated slideInDown">
       <h4>Sorry,the page you requested was <span class="grey-text lighten-5">not found</span>.</h4>
       <!-- <img class="responsive-img" src="https://optinmonster.com/wp-content/uploads/2018/06/11-brilliant-404-pages-to-turn-lost-visitors-into-loyal-customers-2.png" alt="page not found"> -->
       <!-- <br>

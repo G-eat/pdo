@@ -29,10 +29,13 @@
      <title>Chat <?php echo $user['name'] ?></title>
      <!-- Compiled and minified CSS -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <!-- animate css -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+     <!-- my css -->
      <link rel="stylesheet" href="./chat.css">
    </head>
    <body>
-     <div class="wrapper">
+     <div class="wrapper animated zoomIn">
       <nav class="nav" id="nav">
         <div class="default-nav">
           <div class="main-nav">

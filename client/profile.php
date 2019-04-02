@@ -18,6 +18,12 @@
 
     $user = $query1->fetch();
 
+    // messages not viewed by users
+    $mysqlUsers = 'SELECT DISTINCT your_id FROM chat WHERE user_id = ? AND seen = false';
+    $queryUsers = $pdo->prepare($mysqlUsers);
+    $queryUsers->execute([$_SESSION['user_id']]);
+    $usersMsg = $queryUsers->rowCount();
+
  ?>
 
 <!DOCTYPE html>
@@ -45,7 +51,7 @@
           <ul class="right hide-on-med-and-down">
             <li><a href="http://localhost/pdo/client/index.php">Posts</a></li>
             <li><a href="http://localhost/pdo/client/create_post.php">Create Post</a></li>
-            <li><a href="http://localhost/pdo/client/users.php">Users</a></li>
+            <li><a href="http://localhost/pdo/client/users.php">Users <?php if($usersMsg){ echo'<span class="red accent-3 black-text circle" style="padding:0 0.6rem">'.$usersMsg.'</span>';} ?></a></li>
             <?php if (isset($_SESSION['admin'])) { ?>
               <li><a href="http://localhost/pdo/client/admin_dashbord.php">Admin</a></li>
             <?php } else {?>
@@ -62,7 +68,7 @@
             <li><div class="divider"></div></li>
             <li><a href="http://localhost/pdo/client/index.php" class="white-text">Posts</a></li>
             <li><div class="divider"></div></li>
-            <li><a href="http://localhost/pdo/client/users.php" class="white-text">Users</a></li>
+            <li><a href="http://localhost/pdo/client/users.php" class="white-text">Users <?php if($usersMsg){ echo'<span class="red accent-3 black-text circle" style="padding:0 0.6rem">'.$usersMsg.'</span>';} ?></a></li>
             <li><div class="divider"></div></li>
             <li><a href="http://localhost/pdo/client/create_post.php" class="white-text">Create Post</a></li>
             <li><div class="divider"></div></li>

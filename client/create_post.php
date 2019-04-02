@@ -7,6 +7,12 @@
   if (isset($_SESSION['log_in']) || isset($_SESSION['admin'])) {
     $post = new Post;
 
+    // messages not viewed by users
+    $mysqlUsers = 'SELECT DISTINCT your_id FROM chat WHERE user_id = ? AND seen = false';
+    $queryUsers = $pdo->prepare($mysqlUsers);
+    $queryUsers->execute([$_SESSION['user_id']]);
+    $usersMsg = $queryUsers->rowCount();
+
     if (isset($_POST['category'] , $_POST['title'] ,$_POST['body'])) {
        $category = $_POST['category'];
        $title = $_POST['title'];
@@ -56,6 +62,9 @@
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- animate css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
+    <!-- my css -->
     <link rel="stylesheet" href="./style.css">
   </head>
   <body>
@@ -71,7 +80,7 @@
           <ul class="right hide-on-med-and-down">
             <li><a href="http://localhost/pdo/client/">Posts</a></li>
             <li class='active'><a href="#">Create Post</a></li>
-            <li><a href="http://localhost/pdo/client/users.php">Users</a></li>
+            <li><a href="http://localhost/pdo/client/users.php">Users <?php if($usersMsg){ echo'<span class="red accent-3 black-text circle" style="padding:0 0.6rem">'.$usersMsg.'</span>';} ?></a></li>
             <?php if (isset($_SESSION['admin'])) { ?>
               <li><a href="http://localhost/pdo/client/admin_dashbord.php">Admin</a></li>
             <?php } else {?>
@@ -90,7 +99,7 @@
             <li><div class="divider"></div></li>
             <li><a href="http://localhost/pdo/client/create_post.php" class="white-text" style="background:red">Create Post</a></li>
             <li><div class="divider"></div></li>
-            <li><a href="http://localhost/pdo/client/users.php" class="white-text">Users</a></li>
+            <li><a href="http://localhost/pdo/client/users.php" class="white-text">Users <?php if($usersMsg){ echo'<span class="red accent-3 black-text circle" style="padding:0 0.6rem">'.$usersMsg.'</span>';} ?></a></li>
             <li><div class="divider"></div></li>
             <?php if (isset($_SESSION['admin'])) { ?>
               <li><a href="http://localhost/pdo/client/admin_dashbord.php" class="white-text">Admin</a></li>
@@ -116,7 +125,7 @@
 
       <br><br>
 
-      <div class="row container">
+      <div class="row container animated lightSpeedIn">
        <h4 class="red-text text-darken-4">Create Post</h4>
        <form class="col s12" method='post' enctype="multipart/form-data">
          <div class="row">
