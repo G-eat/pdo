@@ -40,7 +40,7 @@
         <div class="default-nav">
           <div class="main-nav">
             <a href="http://localhost/pdo/client/users.php" class="toggle"></a>
-            <div class="main-nav-item"><a class="main-nav-item-link" href="#"><?php echo $user['name'] ?></a></div>
+            <div class="main-nav-item"><a class="main-nav-item-link" href="profile.php?user=<?php echo $user['name'] ?>"><?php echo $user['name'] ?></a></div>
             <div class="options"></div>
           </div>
         </div>

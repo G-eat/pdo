@@ -14,6 +14,22 @@
   $queryUsers->execute([$_SESSION['user_id']]);
   $usersMsg = $queryUsers->rowCount();
 
+  if (filter_has_var(INPUT_POST,'deletepost')) {
+    $id = $_POST["id"];
+    $mysql = 'DELETE FROM posts WHERE id = ?';
+    $query = $pdo->prepare($mysql);
+    $query->execute([$id]);
+
+    $mysql_delComments = 'DELETE FROM comments WHERE post_id = ?';
+    $query_delComments = $pdo->prepare($mysql_delComments);
+    $query_delComments->execute([$id]);
+
+    $mysql_delReports = 'DELETE FROM report WHERE post_id = ?';
+    $query_delReports = $pdo->prepare($mysql_delReports);
+    $query_delReports->execute([$id]);
+    header('Location: http://localhost/pdo/client/admin_dashbord.php');
+    }
+
   //comments xml
   $comment->xml_comments();
 
@@ -141,8 +157,15 @@
                   <p><?php echo $data['body'] ?></p>
                 </div>
                 <div class="card-action">
-                  <span>Created_at <span class='amber-text'><?php echo $data['created_at'] ?></span> in category : <span class='amber-text'><?php echo $data['category'] ?></span></span>
-                  <a href="http://localhost/pdo/client/profile.php?user=<?php echo $data['post_user'] ?>" class="orange-text darken-4" style="float:right;"><?php echo $data['post_user'] ?></a>
+                  <span>Created_at <span class='amber-text'><?php echo $data['created_at'] ?></span> in category : <span class='amber-text'><a href='category.php?name=<?php echo $data['category'] ?>'><?php echo $data['category'] ?></a></span>
+                  <a href="http://localhost/pdo/client/profile.php?user=<?php echo $data['post_user'] ?>" class="orange-text darken-4" style="float:right;">
+                  <?php if (isset($_SESSION['log_in']) && $data['post_user'] == $_SESSION['log_in']) {
+                    echo 'YOU';
+                  }elseif (isset($_SESSION['admin']) && $data['post_user'] == $_SESSION['admin']) {
+                    echo 'YOU';
+                  }else {
+                     echo $data['post_user'];
+                  } ?></a>
                 </div>
               </div>
             </div>
@@ -182,10 +205,10 @@
           </ul>
           <br>
           <a href='http://localhost/pdo/client/'>&larr; Back</a>
-          <?php if (isset($_SESSION['admin'])) { ?>
-            <form style="float:right" method="post" action="admin_dashbord.php">
+          <?php if (isset($_SESSION['admin']) || $data['post_user'] == $_SESSION['log_in']) { ?>
+            <form style="float:right" method="post" action="">
               <input type="hidden" name='id' value="<?php echo $_GET['id'] ?>">
-              <input class=" btn red lighten-2" type="submit" name="submit" value="DELETE &#10006;" />
+              <input class=" btn red lighten-2" type="submit" name="deletepost" value="DELETE &#10006;" />
             </form>
           <?php } else {?>
             <!-- Modal Trigger -->

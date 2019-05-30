@@ -88,7 +88,12 @@
 
     <div class='container'>
       <ul class="collection with-header">
-        <li class="collection-header"><h6 class="blue-text darken-4">Posts of <?php echo $_GET['user'] ?><span style="float:right;"><a href='chat.php?id=<?php echo $user['id'] ?>'><i class="material-icons">chat</i>with <?php echo $_GET['user'] ?></span></a></h6></li>
+        <li class="collection-header"><h6 class="blue-text darken-4">Posts of <?php echo $_GET['user'] ?>
+          <?php if (isset($_SESSION['log_in']) && $_GET['user'] == $_SESSION['log_in']) {
+          }elseif (isset($_SESSION['admin']) && $_GET['user'] == $_SESSION['admin']) {
+          } else{ ?>
+            <span style="float:right;"><a href='chat.php?id=<?php echo $user['id'] ?>'><i class="material-icons">chat</i>with <?php echo $_GET['user'] ?></span></a></h6></li>
+          <?php } ?>
         <?php  foreach ($posts as $post) { ?>
           <div class="card  light-green lighten-5">
             <div class="card-content white-text">
@@ -96,7 +101,7 @@
               <p class="grey-text"><?php echo $post['body'] ?></p>
             </div>
             <div class="card-action">
-              <span>Created_at <span class='amber-text'><?php echo $post['created_at'] ?></span> in category : <span class='amber-text'><?php echo $post['category'] ?></span></span>
+              <span>Created_at <span class='amber-text'><?php echo $post['created_at'] ?></span> in category : <span class='amber-text'><a href='category.php?name=<?php echo $post['category'] ?>'><?php echo $post['category'] ?></a></span></span>
             </div>
             <br><br>
           </div>

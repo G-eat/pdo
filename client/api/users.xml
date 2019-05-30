@@ -1,38 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <users>
   <user>
-    <id>13</id>
-    <name>Andi </name>
+    <id>21</id>
+    <name>Andi 3</name>
+    <admin>0</admin>
+    <password>c277bd0246b6c704aef2fb6666d2ed1a</password>
+    <created_at>2019-05-23 13:34:37</created_at>
+  </user>
+  <user>
+    <id>22</id>
+    <name>admin 3</name>
     <admin>1</admin>
-    <password>3dbe00a167653a1aaee01d93e77e730e</password>
-    <created_at>2019-02-13 14:45:33</created_at>
+    <password>7169390683d2b222ba778ca6374b59d3</password>
+    <created_at>2019-05-23 13:35:40</created_at>
   </user>
   <user>
-    <id>14</id>
-    <name>Andi 1</name>
+    <id>24</id>
+    <name>G-eat 3</name>
     <admin>0</admin>
-    <password>3dbe00a167653a1aaee01d93e77e730e</password>
-    <created_at>2019-02-13 14:58:00</created_at>
+    <password>a887aebc38593be57dc8ec8313f6e73d</password>
+    <created_at>2019-05-23 13:52:14</created_at>
   </user>
   <user>
-    <id>16</id>
-    <name>G-eat </name>
+    <id>25</id>
+    <name>Andi 5</name>
     <admin>0</admin>
-    <password>9c72446df124ddf214b698c1e2312371</password>
-    <created_at>2019-02-14 14:01:00</created_at>
-  </user>
-  <user>
-    <id>17</id>
-    <name>abc </name>
-    <admin>0</admin>
-    <password>3dbe00a167653a1aaee01d93e77e730e</password>
-    <created_at>2019-03-08 15:33:36</created_at>
-  </user>
-  <user>
-    <id>18</id>
-    <name>Andi 2</name>
-    <admin>0</admin>
-    <password>3dbe00a167653a1aaee01d93e77e730e</password>
-    <created_at>2019-03-14 16:42:42</created_at>
+    <password>9500fb21eb8f50bf0427d655b284029a</password>
+    <created_at>2019-05-25 15:35:45</created_at>
   </user>
 </users>
